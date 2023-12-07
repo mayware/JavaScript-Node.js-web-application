@@ -1,0 +1,23 @@
+{
+  "name": "blog-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tofa93/Node.js-Express-MongoDB-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tofa93/Node.js-Express-MongoDB-project/issues"
+  },
+  "homepage": "https://github.com/tofa93/Node.js-Express-MongoDB-project#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}

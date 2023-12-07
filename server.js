@@ -1,20 +1,32 @@
 const { log } = require("console");
 const http = require("http");
 const fs = require("fs");
+const _ = require("lodash");
 
 const server = http.createServer((req, res) => {
+
     res.setHeader('Content-Type', 'text/html');
 
     let path = './views/';
     switch (req.url) {
         case '/':
             path += 'index.html';
+            res.statusCode = 200;
             break;
         case '/about':
             path += 'about.html';
+            res.statusCode = 200;
             break;
+        //redirection
+        case '/about-me':
+            res.statusCode = 301;
+            res.setHeader('Location', '/about');
+            res.end();
+            break;
+        //
         default:
             path += '404.html';
+            res.statusCode = 404;
             break;
     }
 
@@ -24,6 +36,7 @@ const server = http.createServer((req, res) => {
             res.end();
         } else {
             // res.write(data);
+
             res.end(data);
         }
     })
