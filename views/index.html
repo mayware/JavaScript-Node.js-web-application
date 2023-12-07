@@ -5,9 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node.js application</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 65px;
+            top: 0;
+            padding: 0 1.5rem;
+            background: #003566;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #fff;
+            margin: 0.5rem;
+        }
+    </style>
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link">About</a>
+        </div>
+    </nav>
     <h1>Home</h1>
     <h2>HTML home page here</h2>
 </body>
