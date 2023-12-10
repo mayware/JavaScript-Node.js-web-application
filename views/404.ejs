@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        404 | <%= title %>
-    </title>
-</head>
+<!-- Head tag replaced with the ejs template -->
+<%- include('./partials/head.ejs') %>
 
 <body>
-    <div class="not-found content"></div>
-    <h1>404 page not found !</h1>
+    <%- include('./partials/nav.ejs') %>
+    <div class="not-found content">
+        <h1>404 page not found !</h1>
+    </div>
+
+    <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>
