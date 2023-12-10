@@ -1,26 +1,29 @@
-const express = require("express");
-
-// express app
+const express = require('express');
 const app = express();
 
-// listen for requests
+// register view engine
+app.set('view engine', 'ejs');
 app.listen(3000);
 
+
 app.get("/", (req, res) => {
-    // {root: __dirname} is made to express look for html files through the project folder
-    res.sendFile('./views/index.html', { root: __dirname })
+    const blogs = [
+        { title: 'Blog one', snippet: 'snippet generated' },
+        { title: 'Blog two', snippet: 'snippet generated' },
+        { title: 'Blog three', snippet: 'snippet generated' }
+    ];
+    res.render('index', { title: 'Home', blogz: blogs });
 });
 
 app.get("/about", (req, res) => {
-    res.sendFile('./views/about.html', { root: __dirname })
+    res.render('about', { title: 'About Us' });
 });
 
-// redirect from an old page to the new
-app.get("/about-us", (req, res) => {
-    res.redirect('/about');
+app.get('/blogs/create', (req, res) => {
+    res.render('create', { title: 'Create a new blog' });
 })
 
 app.use((req, res) => {
-    res.status(404).sendFile('./views/404.html', { root: __dirname })
+    res.status(404).render('404', { title: '404 Page' });
 });
 
