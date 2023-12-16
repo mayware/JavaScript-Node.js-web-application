@@ -1,10 +1,23 @@
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 const app = express();
+
+const username = encodeURIComponent("tofa993");
+const password = encodeURIComponent("19932005Vvt");
+
+const dburi = `mongodb+srv://${username}:${password}@cluster0.yu23f4v.mongodb.net/?retryWrites=true&w=majority`;
+mongoose.connect(dburi, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => {
+        app.listen(3000);
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
 
 // register view engine
 app.set('view engine', 'ejs');
-app.listen(3000);
 
 // middleware & static files(e.g images, css files etc)
 app.use(express.static('public'));
