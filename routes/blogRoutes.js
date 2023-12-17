@@ -1,12 +1,16 @@
-app.get('/blogs/create', (req, res) => {
+const express = require('express');
+const router = express.Router();
+const Blog = require('../models/blog');
+
+
+// Blog routes
+
+router.get('/create', (req, res) => {
     res.render('create', { title: 'Create a new blog' });
 })
 
-// Main Routes ////////////////////////////////////////////////////////////////////////////
-
-
 // This is resposible for the displaying the home page, because of line: 24 where we redirect user to the /blogs
-app.get("/blogs", (req, res) => {
+router.get("/", (req, res) => {
     Blog.find().sort({ createdAt: -1 }) // sorting makes the newest blog to appear at the top
         .then((data) => {
             res.render('index', { title: 'All Blogs here', blogs: data })
@@ -17,7 +21,7 @@ app.get("/blogs", (req, res) => {
 });
 
 // POST request
-app.post('/blogs', (req, res) => {
+router.post('/', (req, res) => {
     const blog = new Blog(req.body); // here "body" corresponds to an entire object including title, snippet and body
     blog.save()
         .then((result) => {
@@ -29,7 +33,7 @@ app.post('/blogs', (req, res) => {
 })
 
 // responsible for navigating to the selected blog
-app.get('/blogs/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const id = req.params.id // params.id refers to this /blogs/:id
     Blog.findById(id)
         .then(result => {
@@ -41,7 +45,7 @@ app.get('/blogs/:id', (req, res) => {
 })
 
 // responsible for deleting the blog
-app.delete('/blogs/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const id = req.params.id;
     Blog.findByIdAndDelete(id)
         .then(result => {
@@ -53,3 +57,5 @@ app.delete('/blogs/:id', (req, res) => {
             console.log(err)
         })
 })
+
+module.exports = router;

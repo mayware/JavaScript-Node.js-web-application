@@ -1,9 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const blog = require('./models/blog');
-const Blog = require('./models/blog');
-
+const blogRoutes = require('./routes/blogRoutes')
 const app = express();
 
 const dburi = `mongodb+srv://tofa993:19932005Vvt@cluster0.yu23f4v.mongodb.net/?retryWrites=true&w=majority`;
@@ -27,6 +25,8 @@ app.get("/about", (req, res) => {
     res.render('about', { title: 'About Us' });
 });
 
+// Blog routes
+app.use('/blogs', blogRoutes);
 
 
 // redirecting the user to the 404 page if there is no match
