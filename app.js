@@ -19,7 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 
-// Main Routes ////////////////////////////////////////////////////////////////////////////
 app.get("/", (req, res) => {
     res.redirect('/blogs');
 });
@@ -28,55 +27,9 @@ app.get("/about", (req, res) => {
     res.render('about', { title: 'About Us' });
 });
 
-app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'Create a new blog' });
-})
-// Main Routes ////////////////////////////////////////////////////////////////////////////
 
-app.get("/blogs", (req, res) => {
-    Blog.find().sort({ createdAt: -1 }) // sorting makes the newest blog to appear at the top
-        .then((data) => {
-            res.render('index', { title: 'All Blogs here', blogs: data })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-});
 
-app.post('/blogs', (req, res) => {
-    const blog = new Blog(req.body); // here "body" corresponds to an entire object including title, snippet and body
-    blog.save()
-        .then((result) => {
-            res.redirect('/blogs')
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-})
-
-app.get('/blogs/:id', (req, res) => {
-    const id = req.params.id // params.id refers to this /blogs/:id
-    Blog.findById(id)
-        .then(result => {
-            res.render('details', { blog: result, title: 'Blog Details' })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-})
-
-app.delete('/blogs/:id', (req, res) => {
-    const id = req.params.id;
-
-    Blog.findByIdAndDelete(id)
-        .then(result => {
-            res.json({ redirect: '/blogs' })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-})
-
+// redirecting the user to the 404 page if there is no match
 app.use((req, res) => {
     res.status(404).render('404', { title: '404 Page' });
 });

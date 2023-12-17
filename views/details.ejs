@@ -18,10 +18,10 @@
                         <a class="delete" data-doc="<%= blog._id %>">delete</a>
                     </div>
                 </div>
-
                 <%- include('./partials/footer.ejs') %>
             </div>
 
+            <!-- Front-end script to delete blog-->
             <script>
                 const trashcan = document.querySelector('a.delete');
 
@@ -31,12 +31,13 @@
                     fetch(endpoint, {
                         method: 'DELETE',
                     })
-                        .then(response => response.json())
-                        .then(data => window.location.href = data.redirect)
+                        .then(response => response.json()) // here we receive that json file with "/blogs" for redirect
+                        .then(data => window.location.href = data.redirect) // and here we use that json to redirect a user to /blogs
                         .catch(err => console.log(err));
                 });
 
             </script>
+            <!-- Front-end script to delete blog -->
     </body>
 
 </html>

@@ -98,10 +98,12 @@ a {
 .single {
     width: 100%;
     color: #edf2f4;
+    transition: 200ms ease-in-out;
 }
 
 .single:hover {
     color: #06d6a0;
+    transition: 200ms ease-in-out;
 }
 
 .details {
