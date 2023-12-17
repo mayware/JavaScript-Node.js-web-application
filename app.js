@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 
-// Routes ////////////////////////////////////////////////////////////////////////////
+// Main Routes ////////////////////////////////////////////////////////////////////////////
 app.get("/", (req, res) => {
     res.redirect('/blogs');
 });
@@ -27,6 +27,11 @@ app.get("/", (req, res) => {
 app.get("/about", (req, res) => {
     res.render('about', { title: 'About Us' });
 });
+
+app.get('/blogs/create', (req, res) => {
+    res.render('create', { title: 'Create a new blog' });
+})
+// Main Routes ////////////////////////////////////////////////////////////////////////////
 
 app.get("/blogs", (req, res) => {
     Blog.find().sort({ createdAt: -1 }) // sorting makes the newest blog to appear at the top
@@ -60,12 +65,19 @@ app.get('/blogs/:id', (req, res) => {
         })
 })
 
-app.get('/blogs/create', (req, res) => {
-    res.render('create', { title: 'Create a new blog' });
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            res.json({ redirect: '/blogs' })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 })
 
 app.use((req, res) => {
     res.status(404).render('404', { title: '404 Page' });
 });
-// Routes ////////////////////////////////////////////////////////////////////////////
 
