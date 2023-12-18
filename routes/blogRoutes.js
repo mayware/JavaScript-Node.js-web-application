@@ -1,61 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const Blog = require('../models/blog');
+const blogController = require('../controllers/blogController');
 
 
 // Blog routes
 
-router.get('/create', (req, res) => {
-    res.render('create', { title: 'Create a new blog' });
-})
+router.get('/create', blogController.blog_create_get)
 
-// This is resposible for the displaying the home page, because of line: 24 where we redirect user to the /blogs
-router.get("/", (req, res) => {
-    Blog.find().sort({ createdAt: -1 }) // sorting makes the newest blog to appear at the top
-        .then((data) => {
-            res.render('index', { title: 'All Blogs here', blogs: data })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-});
+// Displaying the home page
+router.get("/", blogController.blog_index);
 
-// POST request
-router.post('/', (req, res) => {
-    const blog = new Blog(req.body); // here "body" corresponds to an entire object including title, snippet and body
-    blog.save()
-        .then((result) => {
-            res.redirect('/blogs')
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-})
+// Saving input data from the actual form to the server
+router.post('/', blogController.blog_create_post)
 
-// responsible for navigating to the selected blog
-router.get('/:id', (req, res) => {
-    const id = req.params.id // params.id refers to this /blogs/:id
-    Blog.findById(id)
-        .then(result => {
-            res.render('details', { blog: result, title: 'Blog Details' })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-})
+// Navigating to the selected blog
+router.get('/:id', blogController.blog_details);
 
-// responsible for deleting the blog
-router.delete('/:id', (req, res) => {
-    const id = req.params.id;
-    Blog.findByIdAndDelete(id)
-        .then(result => {
-            res.json({ redirect: '/blogs' })
-            // here we just send text message (json object) to the frontend, which corresponds to the url where we want to be redirected to
-            // and in frontend <script></script> code we just use (window.location.href = redirect)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-})
+// Deleting the blog
+router.delete('/:id', blogController.blog_delete)
 
 module.exports = router;
